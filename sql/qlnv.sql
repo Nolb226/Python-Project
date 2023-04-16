@@ -52,17 +52,7 @@ CREATE TABLE `checkout` (
 CREATE TABLE `staff` (
   `id` varchar(10) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `birthday` date NOT NULL,
-  `isDuty` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Cấu trúc bảng cho bảng `duty
---
-
-CREATE TABLE `duty` (
-  `dutyCode` varchar(10) NOT NULL,
-  `dutyName` varchar(50) NOT NULL
+  `birthday` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -90,12 +80,6 @@ ALTER TABLE `staff`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `duty`
---
-ALTER TABLE `duty`
-  ADD PRIMARY KEY (`dutyCode`);
-
---
 -- Các ràng buộc cho các bảng đã đổ
 --
 
@@ -114,11 +98,13 @@ ALTER TABLE `checkout`
 COMMIT;
 
 --
--- Các ràng buộc cho bảng `staff`
+-- Insert dữ liệu 
 --
-ALTER TABLE `staff`
-  ADD CONSTRAINT `is_duty` FOREIGN KEY (`isDuty`) REFERENCES `duty` (`dutyCode`);
-COMMIT;
+
+INSERT INTO `staff` (`id`,`name`,`birthday`) VALUES
+('0417','Nguyễn Ngọc Sơn','2003-05-16'),
+('0426','Nguyễn Ngọc Sang','2003-08-21'),
+('0433','Nguyễn Thành Đạt','2003-05-20');
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
