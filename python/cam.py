@@ -126,7 +126,7 @@ class App:
             self.notice(0)
     
     def encode(self):
-        self.resultName.config(text="Please, wait...")
+        self.resultName.config(text="Please, wait...", anchor="center")
         self.resultImage.config(image=self.photo3)
         self.data = encoding.get_encodings()
         self.id = encoding.get_staff_id()
