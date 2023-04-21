@@ -29,32 +29,28 @@ class App:
         self.resultFrame = tk.Frame(window, width=400, height=480)
         self.resultFrame.place(x = 650, y = 0)
 
-        # Nút tìm kiếm
-        self.search_button = tk.Button(self.resultFrame, text="Tìm kiếm")
-        self.search_button.place(x = 330, y = 5, relwidth=0.15, height=30)
-
         # Nút cập nhật 
-        self.update_button = tk.Button(self.resultFrame, text="Cập nhật", command=self.encode)
-        self.update_button.place(x = 330, y = 40, relwidth=0.15, height=30)
+        self.update_button = tk.Button(self.resultFrame, text="Refresh", command=self.encode)
+        self.update_button.place(x = 330, y = 5, relwidth=0.15, height=30)
 
         # Nút để chụp ảnh
         self.cap_button = tk.Button(
             self.resultFrame, text="Capture", command=self.capture)
-        self.cap_button.place(x = 330, y = 75, relwidth=0.15, height=30)
+        self.cap_button.place(x = 330, y = 40, relwidth=0.15, height=30)
 
         # Nút Checkin
         self.in_button = tk.Button(
             self.resultFrame, text="Check in", command=lambda: self.check(1))
-        self.in_button.place(x = 330, y = 110, relwidth=0.15, height=30)
+        self.in_button.place(x = 330, y = 75, relwidth=0.15, height=30)
 
         # Nút Checkout
         self.out_button = tk.Button(
             self.resultFrame, text="Check out", command=lambda: self.check(2))
-        self.out_button.place(x = 330, y = 145, relwidth=0.15, height=30)
+        self.out_button.place(x = 330, y = 110, relwidth=0.15, height=30)
 
         # Nút để thoát ứng dụng
         self.quit_button = tk.Button(self.resultFrame, text="Quit", command=self.quit)
-        self.quit_button.place(x = 330, y = 180, relwidth=0.15, height=30)
+        self.quit_button.place(x = 330, y = 145, relwidth=0.15, height=30)
 
         # Khởi tạo font
         self.myFont = tkFont.Font(family='Helvetica', size=12, weight='bold')
@@ -172,6 +168,7 @@ class App:
         self.resultImage.configure(image="")
         self.resultId.configure(text="")
         self.resultName.configure(text="")
+        self.inputValue.set("")
 
     def notice(self, status):
         if status == 1:

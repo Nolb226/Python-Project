@@ -42,7 +42,7 @@ def get_encodings():
         # Nên chắc chắn trong dataset ban đầu ảnh chỉ có một mặt người thôi nhé
         # Lý tưởng nhất mỗi ảnh có 1 face và có 1 encoding thôi
         for encoding in encodings:
-            # lưu encoding và name vào lists bên trên
+            # lưu encoding vào list
             knownEncodings.append(encoding)
 
         # Nếu muốn xử lí mỗi hình ảnh chỉ lấy 1 khuôn mặt
@@ -62,10 +62,3 @@ def get_staff_id():
 
     return staffIds
 
-# data = get_encodings()
-# id = get_staff_id()
-# print(len(data))
-# print(len(id))
-# for i in range(len(data)):
-#     print(id[i])
-#     print(data[i])
