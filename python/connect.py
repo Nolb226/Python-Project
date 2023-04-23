@@ -1,5 +1,4 @@
 import mysql.connector
-import datetime
 
 class MySQLConnector:
     def __init__(self, host, user, password, database):
@@ -22,7 +21,4 @@ class MySQLConnector:
     def disconnect(self):
         self.connection.close()
         
-    def execute_query(self, query):
-        self.cursor.execute(query)
-        return self.cursor.fetchall()
 

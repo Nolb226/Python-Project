@@ -26,28 +26,13 @@ def get_encodings():
         # load image bằng OpenCV và chuyển từ BGR to RGB (dlib cần)
         image = cv2.imread(imagePath)
         rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-        # Đối với từng image phải thực hiện detect face, trích xuất face ROI và chuyển về encoding
-        # trả về array of bboxes of faces, dùng dlib như bài face detection đó
-        # model="cnn" chính xác hơn nhưng chậm hơn, "hog" nhanh hơn nhưng kém chính xác hơn
         boxes = face_recognition.face_locations(rgb, model="hog")    
-
-        # tính the facial embedding for the face
-        # sẽ tính encodings cho mỗi face phát hiện được trong ảnh (có thể có nhiều faces)
-        # Để lý tưởng trong ảnh nên chỉ có một mặt người của mình thôi
         encodings = face_recognition.face_encodings(rgb, boxes)  
-
-        # duyệt qua các encodings
-        # Trong ảnh có thể có nhiều faces, mà ở đây chỉ có 1 tên
-        # Nên chắc chắn trong dataset ban đầu ảnh chỉ có một mặt người thôi nhé
-        # Lý tưởng nhất mỗi ảnh có 1 face và có 1 encoding thôi
         for encoding in encodings:
             # lưu encoding vào list
             knownEncodings.append(encoding)
-
         # Nếu muốn xử lí mỗi hình ảnh chỉ lấy 1 khuôn mặt
         # knownEncodings.append(encodings[0])
-
     return knownEncodings
 
 def get_staff_id():
@@ -59,6 +44,5 @@ def get_staff_id():
         fileName = imagePath.split(os.path.sep)[2]
         staffId = fileName.split("-")[0]
         staffIds.append(staffId)
-
     return staffIds
 

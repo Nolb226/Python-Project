@@ -1,5 +1,4 @@
 import connect
-import datetime
 
 class Checkout():
     def __init__(self, staffId, checkOutTime):
@@ -14,3 +13,16 @@ class Checkout():
         connector.connection.commit()
         connector.disconnect()
 
+def select(date):
+    connector = connect.MySQLConnector("localhost", "root", "", "qlnv")
+    connector.connect()
+    if date == "":
+        sql = "SELECT * FROM `checkout`"
+        connector.cursor.execute(sql)
+    else: 
+        sql = "SELECT * FROM `checkout` where DATE(checkOutTime) = %s"
+        connector.cursor.execute(sql,(date,))
+    result = connector.cursor.fetchall()
+    return result
+
+# print(select())
