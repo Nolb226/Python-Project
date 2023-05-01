@@ -11,7 +11,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"D:\4Code\Python\reboot\Python-Project\python\build\assets\frame4")
+ASSETS_PATH = OUTPUT_PATH / Path(r".\assets\frame4")
 
 
 def relative_to_assets(path: str) -> Path:
@@ -20,15 +20,15 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
-window.geometry("1133x744")
+window.geometry("650x650")
 window.configure(bg = "#FFFFFF")
 
 
 canvas = Canvas(
     window,
     bg = "#FFFFFF",
-    height = 744,
-    width = 1133,
+    height = 650,
+    width = 650,
     bd = 0,
     highlightthickness = 0,
     relief = "ridge"
@@ -44,7 +44,7 @@ canvas.create_rectangle(
     outline="")
 
 canvas.create_text(
-    638.0,
+    238.0,
     65.0,
     anchor="nw",
     text="DANH SÁCH NHÂN VIÊN",
@@ -55,7 +55,7 @@ canvas.create_text(
 entry_image_1 = PhotoImage(
     file=relative_to_assets("entry_1.png"))
 entry_bg_1 = canvas.create_image(
-    756.0,
+    321.0,
     120.0,
     image=entry_image_1
 )
@@ -66,10 +66,10 @@ entry_1 = Entry(
     highlightthickness=0
 )
 entry_1.place(
-    x=556.0,
-    y=105.0,
-    width=400.0,
-    height=28.0
+    x=125.0,
+    y=106.0,
+    width=310.0,
+    height=26.0
 )
 
 button_image_1 = PhotoImage(
@@ -82,42 +82,44 @@ button_1 = Button(
     relief="flat"
 )
 button_1.place(
-    x=876.0,
+    x=476.0,
     y=105.0,
     width=80.0,
     height=30.0
 )
 
-canvas.create_rectangle(
-    555.0,
-    105.0,
-    956.0,
-    106.0,
-    fill="#000000",
-    outline="")
+# canvas.create_rectangle(
+#     # 555
+#     125.0,
+#     105.0,
+#     # 956
+#     525.0,
+#     106.0,
+#     fill="#000000",
+#     outline="")
+# # cao
+# canvas.create_rectangle(
+#     525.0,
+#     105.0,
+#     526.0,
+#     135.0,
+#     fill="#000000",
+#     outline="")
 
-canvas.create_rectangle(
-    954.0,
-    105.0,
-    955.0,
-    135.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    555.0,
-    133.0,
-    955.0,
-    134.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    555.0,
-    105.0,
-    556.0,
-    134.0,
-    fill="#000000",
-    outline="")
+# canvas.create_rectangle(
+#     125.0,
+#     133.0,
+#     526.0,
+#     134.0,
+#     fill="#000000",
+#     outline="")
+# # cao
+# canvas.create_rectangle(
+#     125.0,
+#     105.0,
+#     126.0,
+#     135.0,
+#     fill="#000000",
+#     outline="")
 window.resizable(False, False)
 window.mainloop()
