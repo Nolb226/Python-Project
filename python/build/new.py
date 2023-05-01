@@ -11,7 +11,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"D:\4Code\Python\reboot\Python-Project\python\build\assets\frame3")
+ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame3")
 
 
 def relative_to_assets(path: str) -> Path:
@@ -20,21 +20,21 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
-window.geometry("1133x744")
-window.configure(bg = "#FFFFFF")
+window.geometry("650x650")
+window.configure(bg="#FFFFFF")
 
 
 canvas = Canvas(
     window,
-    bg = "#FFFFFF",
-    height = 744,
-    width = 1133,
-    bd = 0,
-    highlightthickness = 0,
-    relief = "ridge"
+    bg="#FFFFFF",
+    height=650,
+    width=650,
+    bd=0,
+    highlightthickness=0,
+    relief="ridge"
 )
 
-canvas.place(x = 0, y = 0)
+canvas.place(x=0, y=0)
 canvas.create_rectangle(
     431.0,
     48.0,
@@ -44,7 +44,7 @@ canvas.create_rectangle(
     outline="")
 
 canvas.create_text(
-    638.0,
+    207.0,
     65.0,
     anchor="nw",
     text="DANH SÁCH NHÂN VIÊN",
@@ -53,15 +53,15 @@ canvas.create_text(
 )
 
 canvas.create_rectangle(
-    554.0,
+    123.0,  # 554
     99.0,
-    958.0,
+    574.0,
     260.0,
-    fill="#FFFFFF",
+    fill="#fff",
     outline="")
 
 canvas.create_text(
-    567.0,
+    136.0,  # 567
     119.0,
     anchor="nw",
     text="Mã cá nhân",
@@ -72,7 +72,7 @@ canvas.create_text(
 entry_image_1 = PhotoImage(
     file=relative_to_assets("entry_1.png"))
 entry_bg_1 = canvas.create_image(
-    817.5,
+    386,
     129.0,
     image=entry_image_1
 )
@@ -83,16 +83,16 @@ entry_1 = Entry(
     highlightthickness=0
 )
 entry_1.place(
-    x=690.0,
-    y=114.0,
-    width=255.0,
+    x=260,
+    y=115.0,
+    width=253.0,
     height=28.0
 )
 
 entry_image_2 = PhotoImage(
     file=relative_to_assets("entry_2.png"))
 entry_bg_2 = canvas.create_image(
-    817.5,
+    386,
     164.0,
     image=entry_image_2
 )
@@ -103,14 +103,14 @@ entry_2 = Entry(
     highlightthickness=0
 )
 entry_2.place(
-    x=690.0,
-    y=149.0,
-    width=255.0,
+    x=260.0,
+    y=150.0,
+    width=253.0,
     height=28.0
 )
 
 canvas.create_text(
-    567.0,
+    136.0,
     154.0,
     anchor="nw",
     text="Họ và tên",
@@ -121,7 +121,7 @@ canvas.create_text(
 entry_image_3 = PhotoImage(
     file=relative_to_assets("entry_3.png"))
 entry_bg_3 = canvas.create_image(
-    817.5,
+    386,
     199.0,
     image=entry_image_3
 )
@@ -132,14 +132,14 @@ entry_3 = Entry(
     highlightthickness=0
 )
 entry_3.place(
-    x=690.0,
-    y=184.0,
-    width=255.0,
+    x=260,
+    y=185.0,
+    width=253.0,
     height=28.0
 )
 
 canvas.create_text(
-    567.0,
+    136.0,
     189.0,
     anchor="nw",
     text="Chức vụ",
@@ -157,40 +157,40 @@ button_1 = Button(
     relief="flat"
 )
 button_1.place(
-    x=690.0,
+    x=259.0,
     y=219.0,
     width=127.0,
     height=30.0
 )
 
 canvas.create_rectangle(
-    554.0,
+    527.0,
     99.0,
-    555.0,
+    529.0,
     259.0,
     fill="#000000",
     outline="")
 
 canvas.create_rectangle(
-    555.0,
+    123.0,
     258.0,
-    957.0,
-    259.0,
+    527.0,
+    260.0,
     fill="#000000",
     outline="")
 
 canvas.create_rectangle(
-    956.0,
+    123.0,
     99.0,
-    957.0,
+    125.0,
     258.0,
     fill="#000000",
     outline="")
 
 canvas.create_rectangle(
-    554.0,
-    99.0,
-    956.0,
+    123.0,
+    98.0,
+    527.0,
     100.0,
     fill="#000000",
     outline="")
