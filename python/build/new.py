@@ -4,195 +4,266 @@
 
 
 from pathlib import Path
-
+import datetime
 # from tkinter import *
 # Explicit imports to satisfy Flake8
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk, END, messagebox
+from tkinter.messagebox import askyesno
+from tkcalendar import DateEntry
+import duty
+import staff
 
 
-OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame3")
+class New(ttk.Frame):
+    def __init__(self, frame):
+        super().__init__(frame)
+        OUTPUT_PATH = Path(__file__).parent
+        ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame3")
 
+        def relative_to_assets(path: str) -> Path:
+            return ASSETS_PATH / Path(path)
 
-def relative_to_assets(path: str) -> Path:
-    return ASSETS_PATH / Path(path)
+        # window = Tk()
+        # window.geometry("650x650")
+        # window.configure(bg="#FFFFFF")
 
+        self.canvas = Canvas(
+            self,
+            bg="#FFFFFF",
+            height=650,
+            width=650,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
 
-window = Tk()
+        self.canvas.place(x=0, y=0)
+        self.canvas.create_rectangle(
+            431.0,
+            48.0,
+            1081.0,
+            698.0,
+            fill="#FFFFFF",
+            outline="")
 
-window.geometry("650x650")
-window.configure(bg="#FFFFFF")
+        self.canvas.create_text(
+            250.0,
+            65.0,
+            anchor="nw",
+            text="NHÂN VIÊN MỚI",
+            fill="#1E1E1E",
+            font=("Inter SemiBold", 20 * -1)
+        )
 
+        self.canvas.create_rectangle(
+            123.0,  # 554
+            99.0,
+            574.0,
+            260.0,
+            fill="#fff",
+            outline="")
 
-canvas = Canvas(
-    window,
-    bg="#FFFFFF",
-    height=650,
-    width=650,
-    bd=0,
-    highlightthickness=0,
-    relief="ridge"
-)
+        self.canvas.create_text(
+            136.0,  # 567
+            119.0,
+            anchor="nw",
+            text="Mã cá nhân",
+            fill="#000000",
+            font=("Inter SemiBold", 15 * -1)
+        )
 
-canvas.place(x=0, y=0)
-canvas.create_rectangle(
-    431.0,
-    48.0,
-    1081.0,
-    698.0,
-    fill="#FFFFFF",
-    outline="")
+        self.entry_image_1 = PhotoImage(
+            file=relative_to_assets("entry_1.png"))
+        self.entry_bg_1 = self.canvas.create_image(
+            386,
+            129.0,
+            image=self.entry_image_1
+        )
+        self.entry_1 = Entry(
+            self,
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0
+        )
+        self.entry_1.place(
+            x=260,
+            y=115.0,
+            width=253.0,
+            height=28.0
+        )
 
-canvas.create_text(
-    207.0,
-    65.0,
-    anchor="nw",
-    text="DANH SÁCH NHÂN VIÊN",
-    fill="#1E1E1E",
-    font=("Inter SemiBold", 20 * -1)
-)
+        self.entry_image_2 = PhotoImage(
+            file=relative_to_assets("entry_2.png"))
+        self.entry_bg_2 = self.canvas.create_image(
+            386,
+            164.0,
+            image=self.entry_image_2
+        )
+        self.entry_2 = Entry(
+            self,
 
-canvas.create_rectangle(
-    123.0,  # 554
-    99.0,
-    574.0,
-    260.0,
-    fill="#fff",
-    outline="")
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0
+        )
+        self.entry_2.place(
+            x=260.0,
+            y=150.0,
+            width=253.0,
+            height=28.0
+        )
 
-canvas.create_text(
-    136.0,  # 567
-    119.0,
-    anchor="nw",
-    text="Mã cá nhân",
-    fill="#000000",
-    font=("Inter SemiBold", 15 * -1)
-)
+        self.canvas.create_text(
+            136.0,
+            154.0,
+            anchor="nw",
+            text="Họ và tên",
+            fill="#000000",
+            font=("Inter SemiBold", 15 * -1)
+        )
 
-entry_image_1 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_1 = canvas.create_image(
-    386,
-    129.0,
-    image=entry_image_1
-)
-entry_1 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_1.place(
-    x=260,
-    y=115.0,
-    width=253.0,
-    height=28.0
-)
+        options = duty.select_all()
+        self.entry_image_3 = PhotoImage(
+            file=relative_to_assets("entry_3.png"))
+        self.entry_bg_3 = self.canvas.create_image(
+            386,
+            199.0,
+            image=self.entry_image_3
+        )
+        self.entry_3 = ttk.Combobox(
+            self,
+            state="readonly",
+            values=options,
+        )
+        self.entry_3.place(
+            x=260,
+            y=185.0,
+            width=253.0,
+            height=28.0
+        )
 
-entry_image_2 = PhotoImage(
-    file=relative_to_assets("entry_2.png"))
-entry_bg_2 = canvas.create_image(
-    386,
-    164.0,
-    image=entry_image_2
-)
-entry_2 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_2.place(
-    x=260.0,
-    y=150.0,
-    width=253.0,
-    height=28.0
-)
+        self.canvas.create_text(
+            136.0,
+            189.0,
+            anchor="nw",
+            text="Chức vụ",
+            fill="#000000",
+            font=("Inter SemiBold", 15 * -1)
+        )
 
-canvas.create_text(
-    136.0,
-    154.0,
-    anchor="nw",
-    text="Họ và tên",
-    fill="#000000",
-    font=("Inter SemiBold", 15 * -1)
-)
+        self.entry_image_4 = PhotoImage(
+            file=relative_to_assets("entry_3.png"))
+        self.entry_bg_4 = self.canvas.create_image(
+            386,
+            234.0,
+            image=self.entry_image_3
+        )
+        self.entry_4 = DateEntry(
+            self,
+            state="readonly"
+        )
+        self.entry_4.place(
+            x=260,
+            y=220.0,
+            width=253.0,
+            height=28.0
+        )
 
-entry_image_3 = PhotoImage(
-    file=relative_to_assets("entry_3.png"))
-entry_bg_3 = canvas.create_image(
-    386,
-    199.0,
-    image=entry_image_3
-)
-entry_3 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_3.place(
-    x=260,
-    y=185.0,
-    width=253.0,
-    height=28.0
-)
+        self.canvas.create_text(
+            136.0,
+            224.0,
+            anchor="nw",
+            text="Ngày sinh",
+            fill="#000000",
+            font=("Inter SemiBold", 15 * -1)
+        )
 
-canvas.create_text(
-    136.0,
-    189.0,
-    anchor="nw",
-    text="Chức vụ",
-    fill="#000000",
-    font=("Inter SemiBold", 15 * -1)
-)
+        self.button_image_1 = PhotoImage(
+            file=relative_to_assets("button_1.png"))
+        self.button_1 = Button(
+            self,
+            image=self.button_image_1,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.sign_up(),
+            relief="flat"
+        )
+        self.button_1.place(
+            x=259.0,
+            y=269.0,
+            width=127.0,
+            height=30.0
+        )
 
-button_image_1 = PhotoImage(
-    file=relative_to_assets("button_1.png"))
-button_1 = Button(
-    image=button_image_1,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
-    relief="flat"
-)
-button_1.place(
-    x=259.0,
-    y=219.0,
-    width=127.0,
-    height=30.0
-)
+        #right
+        self.canvas.create_rectangle(
+            527.0,
+            99.0,
+            529.0,
+            309.0,
+            fill="#000000",
+            outline="")
 
-canvas.create_rectangle(
-    527.0,
-    99.0,
-    529.0,
-    259.0,
-    fill="#000000",
-    outline="")
+        #bot
+        self.canvas.create_rectangle(
+            123.0,
+            308.0,
+            527.0,
+            310.0,
+            fill="#000000",
+            outline="")
 
-canvas.create_rectangle(
-    123.0,
-    258.0,
-    527.0,
-    260.0,
-    fill="#000000",
-    outline="")
+        #left
+        self.canvas.create_rectangle(
+            123.0,
+            99.0,
+            125.0,
+            308.0,
+            fill="#000000",
+            outline="")
 
-canvas.create_rectangle(
-    123.0,
-    99.0,
-    125.0,
-    258.0,
-    fill="#000000",
-    outline="")
+        #top
+        self.canvas.create_rectangle(
+            123.0,
+            98.0,
+            527.0,
+            100.0,
+            fill="#000000",
+            outline="")
+    
+    def sign_up(self):
+        answer = askyesno(title="Confirm insert",
+                          message='Bạn chắc chắn chứ ?')
 
-canvas.create_rectangle(
-    123.0,
-    98.0,
-    527.0,
-    100.0,
-    fill="#000000",
-    outline="")
-window.resizable(False, False)
-window.mainloop()
+        if answer:
+            if self.entry_1.get() == '' or self.entry_2.get() == '' or self.entry_4.get() == '':
+
+                messagebox.showerror(
+                    'Invalid input', 'Thông tin không được để trống')
+                return
+            if not self.entry_1.get().isdigit():
+                messagebox.showerror(
+                    'Invalid input', 'Mã cá nhân phải là số')
+                return
+            try:
+                staff.insertStaff(
+                    self.entry_1.get(), self.entry_2.get(),self.entry_4.get(), duty.select_name(self.entry_3.get()))
+            except ValueError:
+                messagebox.showerror(
+                    'ERROR ⚠', 'Mã trùng')
+                return
+            messagebox.showinfo('Done!!!', "Đã tạo thành công")
+
+            self.entry_1.delete(0, END)
+            self.entry_2.delete(0, END)
+            
+
+        
+
+    def clean(self):
+        self.entry_1.delete(0,END)
+        self.entry_1.delete(0,END)
+
+    

@@ -7,119 +7,145 @@ from pathlib import Path
 
 # from tkinter import *
 # Explicit imports to satisfy Flake8
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk, END
+import tkinter as tk
+import staff
+import duty
 
 
-OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r".\assets\frame4")
+class Find(ttk.Frame):
+
+    def __init__(self, frame):
+        super().__init__(frame)
+
+        OUTPUT_PATH = Path(__file__).parent
+        ASSETS_PATH = OUTPUT_PATH / Path(r".\assets\frame4")
 
 
-def relative_to_assets(path: str) -> Path:
-    return ASSETS_PATH / Path(path)
+        def relative_to_assets(path: str) -> Path:
+            return ASSETS_PATH / Path(path)
+
+        self.canvas = Canvas(
+            self,
+            bg = "#FFFFFF",
+            height = 650,
+            width = 650,
+            bd = 0,
+            highlightthickness = 0,
+            relief = "ridge"
+        )
+
+        self.canvas.place(x = 0, y = 0)
+        self.canvas.create_rectangle(
+            431.0,
+            48.0,
+            1081.0,
+            698.0,
+            fill="#FFFFFF",
+            outline="")
+
+        self.canvas.create_text(
+            200.0,
+            65.0,
+            anchor="nw",
+            text="DANH SÁCH NHÂN VIÊN",
+            fill="#1E1E1E",
+            font=("Inter SemiBold", 20 * -1)
+        )
+
+        self.entry_image_1 = PhotoImage(
+            file=relative_to_assets("entry_1.png"))
+        self.entry_bg_1 = self.canvas.create_image(
+            250.0,
+            120.0,
+            image=self.entry_image_1
+        )
+        self.entry_1 = Entry(
+            self,
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0
+        )
+        self.entry_1.place(
+            x=54.0,
+            y=106.0,
+            width=310.0,
+            height=26.0
+        )
+
+        self.button_image_1 = PhotoImage(
+            file=relative_to_assets("button_1.png"))
+        self.button_1 = Button(
+            self,
+            image=self.button_image_1,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.set_data_table(self.entry_1.get()),
+            relief="flat"
+        )
+        self.button_1.place(
+            x=436.0,
+            y=105.0,
+            width=80.0,
+            height=30.0
+        )
+
+        self.button_image_2 = PhotoImage(
+            file=relative_to_assets("button_2.png"))
+        self.button_2 = Button(
+            self,
+            image=self.button_image_2,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.set_data_table(""),
+            relief="flat"
+        )
+        self.button_2.place(
+            x=516.0,
+            y=105.0,
+            width=80.0,
+            height=30.0
+        )
+
+        self.set_table()
+        self.set_data_table("")
+
+    def set_table(self):
+        self.style = ttk.Style()
+        self.style.configure("myStyle.Treeview", font=('Calibri', 14), rowheight=30) # Modify the font of the body
+        self.style.configure("myStyle.Treeview.Heading", font=('Calibri', 16,'bold')) # Modify the font of the headings
+        self.style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})])
+        self.columns = ('STT','Mã nhân viên','Tên nhân viên','Chức vụ')
+        self.table = ttk.Treeview(self, columns=self.columns, show="headings", style="myStyle.Treeview")
+        vsb = ttk.Scrollbar(self, orient="vertical", command=self.table.yview)
+        vsb.place(x=622,y=150,height=500)
+        self.table.configure(yscrollcommand=vsb.set)
+        for i in range(len(self.columns)):
+            if i==0:
+                self.table.heading(i, text=self.columns[i])
+                self.table.column(i, width=50, anchor='center')
+            elif i == 3:
+                self.table.heading(i, text=self.columns[i])
+                self.table.column(i, width=150, anchor='center')
+            else:
+                self.table.heading(i, text=self.columns[i])
+                self.table.column(i, width=208, anchor='center')
+        
+    def set_data_table(self, code):
+        if self.table.get_children():
+            self.table.delete(*self.table.get_children())
+        if(code == ""):
+             # Thêm dữ liệu vào bảng
+            self.entry_1.delete(0, END)
+            dataStaff = staff.select_all()
+            for i in range(len(dataStaff)):
+                row = dataStaff[i]
+                self.table.insert('', 'end', values=(i+1,row[0],row[1],duty.select_id(row[3])))
+        else:
+            dataStaff = staff.search(code)
+            row = dataStaff
+            self.table.insert('', 'end', values=(1,row[0],row[1],duty.select_id(row[3])))
+        self.table.place(x=0,y=150, height=500)
 
 
-window = Tk()
-
-window.geometry("650x650")
-window.configure(bg = "#FFFFFF")
-
-
-canvas = Canvas(
-    window,
-    bg = "#FFFFFF",
-    height = 650,
-    width = 650,
-    bd = 0,
-    highlightthickness = 0,
-    relief = "ridge"
-)
-
-canvas.place(x = 0, y = 0)
-canvas.create_rectangle(
-    431.0,
-    48.0,
-    1081.0,
-    698.0,
-    fill="#FFFFFF",
-    outline="")
-
-canvas.create_text(
-    238.0,
-    65.0,
-    anchor="nw",
-    text="DANH SÁCH NHÂN VIÊN",
-    fill="#1E1E1E",
-    font=("Inter SemiBold", 20 * -1)
-)
-
-entry_image_1 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_1 = canvas.create_image(
-    321.0,
-    120.0,
-    image=entry_image_1
-)
-entry_1 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_1.place(
-    x=125.0,
-    y=106.0,
-    width=310.0,
-    height=26.0
-)
-
-button_image_1 = PhotoImage(
-    file=relative_to_assets("button_1.png"))
-button_1 = Button(
-    image=button_image_1,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
-    relief="flat"
-)
-button_1.place(
-    x=476.0,
-    y=105.0,
-    width=80.0,
-    height=30.0
-)
-
-# canvas.create_rectangle(
-#     # 555
-#     125.0,
-#     105.0,
-#     # 956
-#     525.0,
-#     106.0,
-#     fill="#000000",
-#     outline="")
-# # cao
-# canvas.create_rectangle(
-#     525.0,
-#     105.0,
-#     526.0,
-#     135.0,
-#     fill="#000000",
-#     outline="")
-
-# canvas.create_rectangle(
-#     125.0,
-#     133.0,
-#     526.0,
-#     134.0,
-#     fill="#000000",
-#     outline="")
-# # cao
-# canvas.create_rectangle(
-#     125.0,
-#     105.0,
-#     126.0,
-#     135.0,
-#     fill="#000000",
-#     outline="")
-window.resizable(False, False)
-window.mainloop()
